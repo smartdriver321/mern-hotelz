@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
 import 'dotenv/config'
+import cookieParser from 'cookie-parser'
 
 import authRoutes from './routes/auth'
 import userRoutes from './routes/users'
@@ -11,6 +12,7 @@ const port = 7000
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(cookieParser())
 app.use(
 	cors({
 		origin: process.env.FRONTEND_URL,
