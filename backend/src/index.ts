@@ -7,6 +7,7 @@ import { v2 as cloudinary } from 'cloudinary'
 
 import authRoutes from './routes/auth'
 import userRoutes from './routes/users'
+import myHotelRoutes from './routes/my-hotels'
 
 const app = express()
 const port = 7000
@@ -23,6 +24,7 @@ app.use(
 
 app.use('/api/auth', authRoutes)
 app.use('/api/users', userRoutes)
+app.use('/api/my-hotels', myHotelRoutes)
 
 mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string)
 
