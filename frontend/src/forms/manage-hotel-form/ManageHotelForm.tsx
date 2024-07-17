@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { FormProvider, useForm } from 'react-hook-form'
 
 import { HotelType } from '../../../../backend/src/shared/types'
@@ -30,6 +31,7 @@ type Props = {
 }
 
 const ManageHotelForm = ({ onSave, isLoading, hotel }: Props) => {
+	const navigate = useNavigate()
 	const formMethods = useForm<HotelFormData>()
 	const { handleSubmit, reset } = formMethods
 
@@ -67,6 +69,7 @@ const ManageHotelForm = ({ onSave, isLoading, hotel }: Props) => {
 		})
 
 		onSave(formData)
+		navigate('/my-hotels')
 	})
 
 	return (
