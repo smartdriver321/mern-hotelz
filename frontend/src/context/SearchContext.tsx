@@ -33,7 +33,7 @@ export const SearchContextProvider = ({
 
 	const [adultCount, setAdultCount] = useState<number>('1')
 
-	const [childCount, setChildCount] = useState<number>('1')
+	const [childCount, setChildCount] = useState<number>('0')
 
 	const [hotelId, setHotelId] = useState<string>('')
 

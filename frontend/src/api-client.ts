@@ -1,5 +1,6 @@
-import { HotelType } from '../../backend/src/shared/types'
+import { HotelSearchResponse, HotelType } from '../../backend/src/shared/types'
 import { RegisterFormData } from './pages/Register'
+import { SignInFormData } from './pages/SignIn'
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || ''
 

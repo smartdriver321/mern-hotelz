@@ -11,7 +11,6 @@ const DetailsSection = () => {
 	return (
 		<div className='flex flex-col gap-4'>
 			<h1 className='text-3xl font-bold mb-3'>Add Hotel</h1>
-
 			<label className='text-gray-700 text-sm font-bold flex-1'>
 				Name
 				<input
@@ -48,7 +47,6 @@ const DetailsSection = () => {
 					)}
 				</label>
 			</div>
-
 			<label className='text-gray-700 text-sm font-bold flex-1'>
 				Description
 				<textarea
@@ -60,7 +58,6 @@ const DetailsSection = () => {
 					<span className='text-red-500'>{errors.description.message}</span>
 				)}
 			</label>
-
 			<label className='text-gray-700 text-sm font-bold max-w-[50%]'>
 				Price Per Night
 				<input
@@ -73,7 +70,6 @@ const DetailsSection = () => {
 					<span className='text-red-500'>{errors.pricePerNight.message}</span>
 				)}
 			</label>
-
 			<label className='text-gray-700 text-sm font-bold max-w-[50%]'>
 				Star Rating
 				<select
