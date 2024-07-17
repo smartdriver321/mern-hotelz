@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useQuery } from 'react-query'
 
 import * as apiClient from '../api-client'
@@ -6,12 +6,14 @@ import { useSearchContext } from '../context/SearchContext'
 import SearchResultsCard from '../components/SearchResultsCard'
 import Pagination from '../components/Pagination'
 import StarRatingFilter from '../components/StarRatingFilter'
+import HotelTypesFilter from '../components/HotelTypesFilter'
 
 const Search = () => {
 	const search = useSearchContext()
 
 	const [page, setPage] = useState<number>(1)
 	const [selectedStars, setSelectedStars] = useState<string[]>([])
+	const [selectedHotelTypes, setSelectedHotelTypes] = useState<string[]>([])
 
 	const searchParams = {
 		destination: search.destination,
@@ -21,6 +23,7 @@ const Search = () => {
 		childCount: search.childCount.toString(),
 		page: page.toString(),
 		stars: selectedStars,
+		types: selectedHotelTypes,
 	}
 
 	const { data: hotelData } = useQuery(['searchHotels', searchParams], () =>
@@ -37,6 +40,18 @@ const Search = () => {
 		)
 	}
 
+	const handleHotelTypeChange = (
+		event: React.ChangeEvent<HTMLInputElement>
+	) => {
+		const hotelType = event.target.value
+
+		setSelectedHotelTypes((prevHotelTypes) =>
+			event.target.checked
+				? [...prevHotelTypes, hotelType]
+				: prevHotelTypes.filter((hotel) => hotel !== hotelType)
+		)
+	}
+
 	return (
 		<div className='grid grid-cols-1 lg:grid-cols-[250px_1fr] gap-5'>
 			<div className='rounded-lg border border-slate-300 p-5 h-fit sticky top-10'>
@@ -48,6 +63,11 @@ const Search = () => {
 					<StarRatingFilter
 						selectedStars={selectedStars}
 						onChange={handleStarsChange}
+					/>
+
+					<HotelTypesFilter
+						selectedHotelTypes={selectedHotelTypes}
+						onChange={handleHotelTypeChange}
 					/>
 				</div>
 			</div>
