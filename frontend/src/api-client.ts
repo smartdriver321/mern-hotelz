@@ -134,7 +134,6 @@ export const searchHotels = async (
 	searchParams: SearchParams
 ): Promise<HotelSearchResponse> => {
 	const queryParams = new URLSearchParams()
-
 	queryParams.append('destination', searchParams.destination || '')
 	queryParams.append('checkIn', searchParams.checkIn || '')
 	queryParams.append('checkOut', searchParams.checkOut || '')
@@ -143,10 +142,10 @@ export const searchHotels = async (
 	queryParams.append('page', searchParams.page || '')
 	queryParams.append('maxPrice', searchParams.maxPrice || '')
 	queryParams.append('sortOption', searchParams.sortOption || '')
-
 	searchParams.facilities?.forEach((facility) =>
 		queryParams.append('facilities', facility)
 	)
+
 	searchParams.types?.forEach((type) => queryParams.append('types', type))
 	searchParams.stars?.forEach((star) => queryParams.append('stars', star))
 
