@@ -4,6 +4,7 @@ import { useQuery } from 'react-query'
 import * as apiClient from '../api-client'
 import { useSearchContext } from '../context/SearchContext'
 import SearchResultsCard from '../components/SearchResultsCard'
+import Pagination from '../components/Pagination'
 
 const Search = () => {
 	const search = useSearchContext()
@@ -43,6 +44,14 @@ const Search = () => {
 				{hotelData?.data.map((hotel) => (
 					<SearchResultsCard hotel={hotel} />
 				))}
+
+				<div>
+					<Pagination
+						page={hotelData?.pagination.page || 1}
+						pages={hotelData?.pagination.pages || 1}
+						onPageChange={(page) => setPage(page)}
+					/>
+				</div>
 			</div>
 		</div>
 	)
