@@ -1,10 +1,15 @@
+import { useParams } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
+import { useMutation } from 'react-query'
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
 
 import {
 	PaymentIntentResponse,
 	UserType,
 } from '../../../../backend/src/shared/types'
+import * as apiClient from '../../api-client'
+import { useSearchContext } from '../../context/SearchContext'
+import { useAppContext } from '../../context/AppContext'
 
 type Props = {
 	currentUser: UserType
@@ -15,17 +20,47 @@ export type BookingFormData = {
 	firstName: string
 	lastName: string
 	email: string
+	adultCount: number
+	childCount: number
+	checkIn: string
+	checkOut: string
+	hotelId: string
+	paymentIntentId: string
+	totalCost: number
 }
 
 const BookingForm = ({ currentUser, paymentIntent }: Props) => {
 	const stripe = useStripe()
 	const elements = useElements()
+	const search = useSearchContext()
+	const { hotelId } = useParams()
+
+	const { showToast } = useAppContext()
+
+	const { mutate: bookRoom, isLoading } = useMutation(
+		apiClient.createRoomBooking,
+		{
+			onSuccess: () => {
+				showToast({ message: 'Booking Saved!', type: 'SUCCESS' })
+			},
+			onError: () => {
+				showToast({ message: 'Error saving booking', type: 'ERROR' })
+			},
+		}
+	)
 
 	const { handleSubmit, register } = useForm<BookingFormData>({
 		defaultValues: {
 			firstName: currentUser.firstName,
 			lastName: currentUser.lastName,
 			email: currentUser.email,
+			adultCount: search.adultCount,
+			childCount: search.childCount,
+			checkIn: search.checkIn.toISOString(),
+			checkOut: search.checkOut.toISOString(),
+			hotelId: hotelId,
+			totalCost: paymentIntent.totalCost,
+			paymentIntentId: paymentIntent.paymentIntentId,
 		},
 	})
 
@@ -103,6 +138,16 @@ const BookingForm = ({ currentUser, paymentIntent }: Props) => {
 					id='payment-element'
 					className='border rounded-md p-2 text-sm'
 				/>
+			</div>
+
+			<div className='flex justify-end'>
+				<button
+					disabled={isLoading}
+					type='submit'
+					className='bg-blue-600 text-white p-2 font-bold hover:bg-blue-500 text-md disabled:bg-gray-500'
+				>
+					{isLoading ? 'Saving...' : 'Confirm Booking'}
+				</button>
 			</div>
 		</form>
 	)
