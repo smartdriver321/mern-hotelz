@@ -1,4 +1,8 @@
-import { HotelSearchResponse, HotelType } from '../../backend/src/shared/types'
+import {
+	HotelSearchResponse,
+	HotelType,
+	UserType,
+} from '../../backend/src/shared/types'
 import { RegisterFormData } from './pages/Register'
 import { SignInFormData } from './pages/SignIn'
 
@@ -27,6 +31,16 @@ export const validateToken = async () => {
 		throw new Error('Token invalid')
 	}
 
+	return response.json()
+}
+
+export const fetchCurrentUser = async (): Promise<UserType> => {
+	const response = await fetch(`${API_BASE_URL}/api/users/me`, {
+		credentials: 'include',
+	})
+	if (!response.ok) {
+		throw new Error('Error fetching user')
+	}
 	return response.json()
 }
 
